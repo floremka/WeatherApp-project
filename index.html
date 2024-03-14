@@ -9,15 +9,21 @@
   <body>
     <div class="content">
       <header>
-        <form class="firstForm" action="/submit">
-          <input name="city" type="text" placeholder="Enter a city" required />
+        <form id="firstForm" action="/submit">
+          <input
+            id="input-text"
+            name="city"
+            type="text"
+            placeholder="Enter a city.........."
+            required
+          />
           <button class="btn" type="submit">Submit</button>
         </form>
       </header>
       <main>
         <div class="mainContent">
           <div>
-            <h1>Paris</h1>
+            <h1 id="h1Text">Paris</h1>
 
             <p>
               <span id="time"> </span>, moderate rain
