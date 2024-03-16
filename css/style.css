@@ -55,6 +55,9 @@ strong {
 span {
   color: #fc9601;
 }
+.currentTimes {
+  color: #ff004d;
+}
 footer {
   border-top: 1px solid #060606;
   text-align: center;

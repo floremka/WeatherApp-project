@@ -1,6 +1,14 @@
-function inputCity(event) {
+function dispalayTemparature(response) {
+  console.log(response.data.temparature.current);
+  let temparature = document.querySelector("#temp");
+  let currentTemparature = Math.round(response.data.temparature.current);
+  temparature.innerHTML = `${currentTemparature}`;
+}
+function inputCity(event, response) {
   event.preventDefault();
-
+  console.log(response.data.temeparature.current);
+  city = inputText.value;
+  key = ea956222f2o8bbfat9d06fcb925a34cb;
   let inputText = document.querySelector("#input-text");
 
   let h1 = document.querySelector("#h1Text");
@@ -10,6 +18,8 @@ function inputCity(event) {
     h1.innerHTML = null;
     alert("sorry enter city");
   }
+  let apiURL = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${key}`;
+  axios.get(apiURL).then(dispalayTemparature);
 }
 
 let form = document.querySelector("#firstForm");
