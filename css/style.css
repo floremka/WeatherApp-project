@@ -71,9 +71,11 @@ span {
   line-height: 20px;
   margin-bottom: 10px;
 }
-.forecastIcon {
-  font-size: 38px;
-  text-align: center;
+.forecastIcon img {
+  width: 88px;
+  height: 88px;
+  display: block;
+  margin: 0 auto;
 }
 .forecastTemperatures {
   text-align: center;

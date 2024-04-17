@@ -3,6 +3,8 @@ function dispalayTemparature(response) {
   let temperature = document.querySelector("#temp");
   let currentTemperature = Math.round(response.data.temperature.current);
   temperature.innerHTML = `${currentTemperature}`;
+
+  getWeatherForecast(response.data.city);
 }
 function inputCity(event) {
   event.preventDefault();
@@ -19,7 +21,7 @@ function inputCity(event) {
 
   let city = inputText.value;
   let apiKey = "ea956222f2o8bbfat9d06fcb925a34cb";
-  let apiURL = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}`;
+  let apiURL = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
   axios.get(apiURL).then(dispalayTemparature);
 }
 
@@ -47,22 +49,40 @@ function timeCity() {
   times.innerHTML = `${day} ${Hours}: ${minute} : ${second}`;
 }
 
-function displayFocast() {
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+
   let days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  return days[date.getDay()];
+}
+
+function getWeatherForecast() {
+  let apiKey = "ea956222f2o8bbfat9d06fcb925a34cb";
+  let apiURL = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+  axios.get(apiURL).then(displayFocast);
+}
+
+function displayFocast(response) {
+  console.log(response.data);
+
   let forcastHTML = "";
 
-  days.forEach(function (day) {
+  response.data.daily.forEach(function (day) {
     forcastHTML =
       forcastHTML +
       `
 <div class="weatherDay">
-<div class ="forecastDay">${day}</div>
-<div class= "forecastIcon">☀</div>
+<div class ="forecastDay">${formatDay(day.time)}</div>
+<div class= "forecastIcon">
+<img src ="${day.condition.icon_url}"/>
+</div>
 <div class="forecastTemperatures">
 <div class ="forecastTemperature">
-<strong>15&#176;</strong>
+<strong>${Math.round(day.temperature.maximun)}&#176;</strong>
 </div>
-<div class="forecastTemparature">9&#176;</div>
+<div class="forecastTemparature">${Math.round(
+        day.temperature.minimum
+      )}&#176;</div>
 
 </div>
 
@@ -76,4 +96,3 @@ function displayFocast() {
 }
 
 timeCity();
-displayFocast();
