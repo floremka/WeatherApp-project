@@ -3,6 +3,18 @@ function dispalayTemparature(response) {
   let temperature = document.querySelector("#temp");
   let currentTemperature = Math.round(response.data.temperature.current);
   temperature.innerHTML = `${currentTemperature}`;
+  let timeElement = document.querySelector("#time");
+  let date = new Date(response.data.time * 1000);
+  let descriptionElement = document.querySelector("#description");
+  let humidityElement = document.querySelector("#himidity");
+  let windElement = document.querySelector("#wind");
+  let iconElement = document.querySelector("#icon");
+
+  timeElement.innerHTML = formatTime(date);
+  descriptionElement.innerHTML = response.data.condition.description;
+  humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
+  windElement.innerHTML = `${response.data.wind.speed}km/h`;
+  iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" class ="weather-app-icon"/>`;
 
   getWeatherForecast(response.data.city);
 }
@@ -25,15 +37,9 @@ function inputCity(event) {
   axios.get(apiURL).then(dispalayTemparature);
 }
 
-let form = document.querySelector("#firstForm");
-form.addEventListener("submit", inputCity);
-
-function timeCity() {
-  let currentTime = new Date();
-
-  let Hours = currentTime.getHours();
-  let minute = currentTime.getMinutes();
-  let second = currentTime.getSeconds();
+function formatTime(date) {
+  let Hours = date.getHours();
+  let minutes = date.getMinutes();
 
   let days = [
     "Sunday",
@@ -44,9 +50,13 @@ function timeCity() {
     "Friday",
     "Saturday",
   ];
-  let day = days[currentTime.getDay()];
-  let times = document.querySelector("#time");
-  times.innerHTML = `${day} ${Hours}: ${minute} : ${second}`;
+  let day = days[date.getDay()];
+
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+
+  return `${day} ${Hours}: ${minutes}`;
 }
 
 function formatDay(timestamp) {
@@ -56,7 +66,7 @@ function formatDay(timestamp) {
   return days[date.getDay()];
 }
 
-function getWeatherForecast() {
+function getWeatherForecast(city) {
   let apiKey = "ea956222f2o8bbfat9d06fcb925a34cb";
   let apiURL = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
   axios.get(apiURL).then(displayFocast);
@@ -79,7 +89,7 @@ function displayFocast(response) {
 </div>
 <div class="forecastTemperatures">
 <div class ="forecastTemperature">
-<strong>${Math.round(day.temperature.maximun)}&#176;</strong>
+<strong>${Math.round(day.temperature.maximum)}&#176;</strong>
 </div>
 <div class="forecastTemparature">${Math.round(
           day.temperature.minimum
@@ -97,4 +107,5 @@ function displayFocast(response) {
   forecastElement.innerHTML = forcastHTML;
 }
 
-timeCity();
+let form = document.querySelector("#firstForm");
+form.addEventListener("submit", inputCity);
