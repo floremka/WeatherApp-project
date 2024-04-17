@@ -67,10 +67,11 @@ function displayFocast(response) {
 
   let forcastHTML = "";
 
-  response.data.daily.forEach(function (day) {
-    forcastHTML =
-      forcastHTML +
-      `
+  response.data.daily.forEach(function (day, index) {
+    if (index < 7) {
+      forcastHTML =
+        forcastHTML +
+        `
 <div class="weatherDay">
 <div class ="forecastDay">${formatDay(day.time)}</div>
 <div class= "forecastIcon">
@@ -81,8 +82,8 @@ function displayFocast(response) {
 <strong>${Math.round(day.temperature.maximun)}&#176;</strong>
 </div>
 <div class="forecastTemparature">${Math.round(
-        day.temperature.minimum
-      )}&#176;</div>
+          day.temperature.minimum
+        )}&#176;</div>
 
 </div>
 
@@ -90,6 +91,7 @@ function displayFocast(response) {
 
 
 `;
+    }
   });
   let forecastElement = document.querySelector("#forecast");
   forecastElement.innerHTML = forcastHTML;
