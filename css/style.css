@@ -53,12 +53,28 @@ strong {
   font-weight: bold;
 }
 span {
-  color: #fc9601;
+  color: #07040b;
 }
+
 .currentTimes {
   color: #ff004d;
 }
-
+.degrees {
+  display: flex;
+}
+.temp-weather {
+  font-size: 60px;
+  line-height: 88px;
+  font-weight: bold;
+}
+.icon-weather {
+  font-size: 88px;
+  line-height: 88px;
+}
+.units {
+  margin-top: 6px;
+  font-size: 28px;
+}
 .weather-forecast {
   display: flex;
   justify-content: space-around;
